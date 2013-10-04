@@ -7,6 +7,11 @@ import urllib2
 
 BASE_URL = "http://www.hockey-reference.com"
 
+def parse_args(args):
+  parser = argparse.ArgumentParser(prog=args[0])
+  parser.add_argument('date', help='"MM-DD-YY"')
+  return parser.parse_args(args[1:])
+
 def gen_soup(url):
   html = urllib2.urlopen(url)
   soup = bs(html)
@@ -22,7 +27,7 @@ def get_links_days_games(day):
   m = datevec[0]
   d = datevec[1]
   y = datevec[2]
-  day_url = "http://www.hockey-reference.com/boxscores/index.cgi?month=%s&day=%s&year=%s"%(m,d,y)
+  day_url = BASE_URL+"/boxscores/index.cgi?month=%s&day=%s&year=%s"%(m,d,y)
   day_soup = gen_soup(day_url)
  
   day_links = [BASE_URL+game.a["href"] for game in day_soup.find("tbody").findAll("tr")]
@@ -47,7 +52,7 @@ class Game:
     print 'game: '+'\n'+self.teams[0]+': '+self.score[0]+'\n''@ '+self.teams[1]+': '+self.score[1]
 
 if __name__ == "__main__":
-  date = sys.argv[1]
-  days_games = [Game(x) for x in get_links_days_games(date)]
+  args = parse_args(sys.argv)
+  days_games = [Game(x) for x in get_links_days_games(args.date)]
   
   scores = [x.announce() for x in days_games]
