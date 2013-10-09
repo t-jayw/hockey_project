@@ -75,5 +75,5 @@ if __name__ == "__main__":
     days_games = [Game(x) for x in get_links_days_games(args.date)]
 
     for x in days_games:
-      hockey_utils.sqlite_insert("/tylerjaywood/sqlite_dbs/hockey.db", 'games_basic',
+      hockey_utils.sqlite_insert("/Users/tylerw/learnpy/sqlite_dbs/hockey.db", 'games_basic',
           hockey_utils.games_basic_insert(x))
