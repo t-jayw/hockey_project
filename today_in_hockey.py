@@ -37,7 +37,7 @@ def get_links_days_games(day):
   try:
     day_links = [BASE_URL+game.a["href"] for game in day_soup.find("tbody").findAll("tr")]
     print str(len(day_links)) + " games played this day"
-  except AttributeError:
+  except (AttributeError, TypeError):
     print "no games on " + day
     day_links = False
   
@@ -70,6 +70,7 @@ class Game:
 
 if __name__ == "__main__":
   args = parse_args(sys.argv)
+
 
   links = get_links_days_games(args.date)
   if links:
