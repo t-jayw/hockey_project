@@ -20,7 +20,7 @@ def sqlite_insert(db, table, values):
    elif table == 'games_basic':
      schema = ",".join(games_basic_schema)
      ins_cmd = "INSERT INTO %s (%s) VALUES (?,?,?,?,?,?)"%(table, schema)
-     print ins_cmd
+     print "row = " + str(values)
 
      with sqlite3.connect(db) as conn:
        print 'inserting data'
