@@ -70,10 +70,10 @@ class Game:
 
 if __name__ == "__main__":
   args = parse_args(sys.argv)
+
   links = get_links_days_games(args.date)
   if links:
-    days_games = [Game(x) for x in get_links_days_games(args.date)]
-
+    days_games = [Game(x) for x in links]    
     for x in days_games:
-      hockey_utils.sqlite_insert("/Users/tylerw/learnpy/sqlite_dbs/hockey.db", 'games_basic',
-          hockey_utils.games_basic_insert(x))
+       hockey_utils.sqlite_insert('/Users/tylerjaywood/sqlite_dbs/hockey.db', 
+                            'games_basic',hockey_utils.games_basic_insert(x))
